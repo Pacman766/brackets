@@ -1,10 +1,12 @@
-module.exports = function check(str, bracketsConfig) {
+function check(str, bracketsConfig) {
   // your solution
   const arr = Array.from(str);
 
   // check if all brackets from bc exist in arr
-  bracketsConfig.forEach(bracket => bracket.every())
+  bracketsConfig.forEach(bracket => bracket.forEach(el => console.log(el)))
 }
+
+check('([{}])', [['(', ')'], ['[', ']'], ['{', '}']])
 
 // module.exports = function check(str, bracketsConfig) {
 //   // your solution
