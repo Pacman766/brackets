@@ -1,4 +1,4 @@
-function check(str, bracketsConfig) {
+module.exports = function check(str, bracketsConfig) {
   let opened = '';
   let closed = '';
 
@@ -57,5 +57,3 @@ function check(str, bracketsConfig) {
   }
   return stack.isEmpty() ? true : false;
 }
-
-console.log(check('|()|(||)||', [['(', ')'], ['|', '|']]));
