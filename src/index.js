@@ -1,63 +1,61 @@
-module.exports = function check(str, bracketsConfig) {
-  let opened = ''
-  let closed = ''
-  const config = bracketsConfig.reduce((acc, brackets) => {
-    acc[brackets[1]] = brackets[0]
-    opened += brackets[0]
-    closed += brackets[1]
-    return acc
-  }, {})
+function check(str, bracketsConfig) {
+  let opened = '';
+  let closed = '';
 
-  let stack = {
+  const brackets = bracketsConfig.reduce((acc, currBracket) => {
+    acc[currBracket[1]] = currBracket[0];
+    opened += currBracket[0];
+    closed += currBracket[1];
+    return acc;
+  }, {});
+
+  const stack = {
     _stack: [],
     isEmpty() {
-      return !Boolean(this._stack.length)
+      return !Boolean(this._stack.length);
     },
-    size() {
-      return this._stack.length
+    pop() {
+      return this._stack.pop();
     },
     push(bracket) {
-      return this._stack.push(bracket)
+      return this._stack.push(bracket);
     },
-    pop(bracket) {
-      return this._stack.pop()
+    size() {
+      return this._stack.length;
     },
     top() {
-      return this._stack[this._stack.length - 1]
+      return this._stack[this._stack.length - 1];
     },
-    print() {
-      return this._stack
-    },
-  }
-  let uno = false
+  };
+
+  let check = false;
   for (let i = 0; i < str.length; i++) {
-    const bracket = str[i]
+    let bracket = str[i];
 
     if (opened.includes(bracket) && closed.includes(bracket)) {
-      if (!uno) {
-        stack.push(bracket)
-        uno = true
+      if (!check) {
+        stack.push(bracket);
+        check = true;
       } else {
-        if (stack.top() === config[bracket]) {
-          stack.pop()
-          uno = false
+        if (stack.top() === brackets[bracket]) {
+          stack.pop();
+          check = false;
         }
       }
     } else {
       if (opened.includes(bracket)) {
-        stack.push(bracket)
+        stack.push(bracket);
       }
-
       if (closed.includes(bracket)) {
-        if (stack.top() === config[bracket]) {
-          stack.pop()
+        if (stack.top() === brackets[bracket]) {
+          stack.pop();
         } else {
-          return false
+          return false;
         }
       }
     }
   }
-
-  return stack.isEmpty() ? true : false
+  return stack.isEmpty() ? true : false;
 }
 
+console.log(check('|()|(||)||', [['(', ')'], ['|', '|']]));
